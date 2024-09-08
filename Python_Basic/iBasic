@@ -1,0 +1,38 @@
+import os
+import subprocess
+import speech_recognition as sr
+
+def recognize_speech():
+    # Initialize the recognizer
+    recognizer = sr.Recognizer()
+
+    # Use the microphone as the source for input
+    with sr.Microphone() as source:
+        print("Please say a command...")
+        audio = recognizer.listen(source)
+
+        try:
+            # Recognize the speech using Google Web Speech API
+            command = recognizer.recognize_google(audio)
+            print(f"You said: {command}")
+            return command.lower()
+        except sr.UnknownValueError:
+            print("Sorry, I did not understand that.")
+        except sr.RequestError:
+            print("Sorry, the speech recognition service is not available.")
+        return ""
+
+def execute_command(command):
+    if "notepad" in command:
+        subprocess.Popen(['notepad.exe'])  # Windows
+    elif "calculator" in command:
+        subprocess.Popen(['gnome-calculator'])  # Linux
+    elif "safari" in command:
+        subprocess.Popen(['open', '-a', 'Safari'])  # macOS
+    else:
+        print("Command not recognized.")
+
+if __name__ == "__main__":
+    command = recognize_speech()
+    if command:
+        execute_command(command)
