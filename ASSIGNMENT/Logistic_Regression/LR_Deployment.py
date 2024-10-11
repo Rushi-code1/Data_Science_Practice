@@ -11,7 +11,7 @@ from sklearn.metrics import accuracy_score
 # Load the Titanic dataset
 @st.cache_data
 def load_data():
-    df = pd.read_csv('./ASSIGNMENT/Titanic_train.csv')
+    df = pd.read_csv('./ASSIGNMENT/Logistic_Regression/Titanic_train.csv')
     return df
 
 df = load_data()
